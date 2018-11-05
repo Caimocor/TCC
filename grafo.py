@@ -8,6 +8,10 @@ import pandas as pd
 import math
 from math import hypot
 import networkx as nx
+import plotly.plotly as py
+import plotly.tools as tls
+
+import matplotlib.pyplot as plt
 
 #le o dataframe considerando o separador como ;
 df = pd.read_csv('dados/PR_antigo.csv',  sep=";")
@@ -42,7 +46,7 @@ for i in range(0,len(X),2):
     G.add_edge((X[i],Y[i]),(X[i+1],Y[i+1]))
 
     
-#armazena os componentes do grafo numa lista
+#armazena os componentes do grafo num vetor
 graphs = list(nx.connected_components(G))
 
 
@@ -50,15 +54,23 @@ print('Nós',len(list(G.nodes)))
 print('Arestas',len(list(G.edges)))
 print('Grafo está conectado?',nx.is_connected(G))
 print('Numero de componentes',nx.number_connected_components(G))
-print(len(sorted(nx.connected_components(G), key = len, reverse=True)))
 
 
-#print(sorted(nx.connected_components(G), key = len, reverse=True)[0])
+size_component = []
+for g in graphs:
+    size_component.append(len(g))
+
+new_a = sorted(set(size_component), key=size_component.index)
 
 
-#pos=nx.spring_layout(G)
-#nx.draw(G, pos,s=0.5,alpha=0.5,node_size=50 )
-#plt.show()
+
+#quantidade de elementos de cada elemento
+qt_elements =[]
+for a in new_a:
+    qt_elements.append(size_component.count(a))
+print(qt_elements)
+
+
 
 
 
